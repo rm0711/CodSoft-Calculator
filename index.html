@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="calculator">
+            <form>
+                <div class="display">
+                    <input type="text" name="display">
+                </div>
+                <div>
+                    <input type="button" value="AC">
+                    <input type="button" value="DEL">
+                    <input type="button" value=".">
+                    <input type="button" value="/">
+                </div>
+                <div>
+                    <input type="button" value="7">
+                    <input type="button" value="8">
+                    <input type="button" value="9">
+                    <input type="button" value="*">
+                </div>
+                <div>
+                    <input type="button" value="4">
+                    <input type="button" value="5">
+                    <input type="button" value="6">
+                    <input type="button" value="+">
+                </div>
+                <div>
+                    <input type="button" value="1">
+                    <input type="button" value="2">
+                    <input type="button" value="3">
+                    <input type="button" value="-">
+                </div>
+                <div>
+                    <input type="button" value="00">
+                    <input type="button" value="0">
+                    <input type="button" value="%">
+                    <input type="button" value="=">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const display = document.querySelector('input[name="display"]');
+        const buttons = document.querySelectorAll('input[type="button"]');
+
+        let currentInput = '';
+        let result = '';
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                handleButtonClick(this.value);
+            });
+        });
+
+        function handleButtonClick(value) {
+            switch (value) {
+                case 'AC':
+                    clearDisplay();
+                    break;
+                case 'DEL':
+                    deleteLastCharacter();
+                    break;
+                case '=':
+                    calculateResult();
+                    break;
+                case '.':
+                    Dotbutton(value);
+                    break;
+                default:
+                    appendToDisplay(value);
+                    break;
+            }
+        }
+
+        function appendToDisplay(value) {
+            currentInput += value;
+            display.value = currentInput;
+        }
+
+        function clearDisplay() {
+            currentInput = '';
+            result = '';
+            display.value = '';
+        }
+        function Dotbutton(value){
+            currentInput = value;
+            display.value = currentInput;
+        }
+
+        function deleteLastCharacter() {
+            currentInput = currentInput.slice(0, -1);
+            display.value = currentInput;
+        }
+
+        function calculateResult() {
+            try {
+                result = eval(currentInput);
+                display.value = result;
+                currentInput = result;
+            } catch (error) {
+                display.value = 'Error';
+            }
+        }
+    });
+
+</script>
+
+</html>
